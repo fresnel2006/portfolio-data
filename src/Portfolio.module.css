@@ -63,6 +63,22 @@
     color: #3776AB;
 }
 
+.textDocker {
+    color: #2496ED;
+}
+
+.textDuckdb {
+    color: #FFF000;
+}
+
+.textAirflow {
+    color: #017CEE;
+}
+
+.textPandas {
+    color: #E70488;
+}
+
 /* =========== NAVBAR =========== */
 .navbar {
     position: sticky;
@@ -287,6 +303,7 @@
 }
 
 .shelfIcon {
+    position: relative;
     width: 48px;
     height: 48px;
     background-color: #111;
@@ -302,6 +319,41 @@
 .shelfIcon:hover {
     border-color: #444;
     transform: translateY(-2px);
+}
+
+/* Tooltip affichant le nom de la techno au survol de chaque icône */
+.shelfTooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2a2a;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.shelfTooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1a1a1a;
+}
+
+.shelfIcon:hover .shelfTooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 .heroImageWrapper {

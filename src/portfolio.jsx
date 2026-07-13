@@ -89,10 +89,11 @@ const filterTabs = [
     { label: "SQL (5)", value: "sql" },
     { label: "PySpark (5)", value: "pyspark" },
     { label: "Cloud (5)", value: "cloud" },
-    { label: "Flutter (3)", value: "flutter" },
-    { label: "Développement Web (5)", value: "web" },
-    { label: "Java (2)", value: "java" },
+    { label: "Développement Mobile/Web (10)", value: "devweb" },
 ];
+
+// Catégories regroupées sous l'onglet "Développement Mobile/Web"
+const devWebCategories = ["flutter", "web", "java"];
 
 // ─── SVG inline réutilisables ────────────────────────────────────────────────
 
@@ -120,6 +121,76 @@ const SupabaseSvg = ({ className }) => (
         <path d="M13.5 2 4 14.5h7.2L10.5 22 20 9.5h-7.2L13.5 2z" fill="#3ECF8E" />
     </svg>
 );
+
+// Devicon n'a pas d'icône DuckDB — SVG inline (le canard jaune du logo).
+const DuckDbSvg = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="10" cy="12" r="8" fill="#FFF000" stroke="#000000" strokeWidth="1" />
+        <circle cx="15.2" cy="9.6" r="1.1" fill="#000000" />
+        <path d="M17 11.5c2.2.6 4.2.1 5.2-1.4-.7 2.8-2.9 4.2-5.4 4.2" fill="#FFF000" stroke="#000000" strokeWidth="1" strokeLinejoin="round" />
+    </svg>
+);
+
+// La police devicon (CDN "plain/original") n'embarque pas la version colorée
+// à 2 tons de Pandas dans sa fonte compilée — on charge donc le SVG source
+// directement en <img> pour garantir l'affichage.
+const PandasSvg = ({ className }) => (
+    <img
+        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg"
+        alt="Pandas"
+        className={className}
+    />
+);
+
+// L'icône devicon-apacheairflow-plain est trop générique. Le vrai logo
+// Apache Airflow est un "pinwheel" en papier à 4 pales pointant vers les
+// coins (NO rouge, NE cyan, SE vert, SO bleu), chaque pale étant composée
+// d'une moitié courbée foncée + un pli plus clair, avec un petit point
+// sombre au centre. On reproduit cette forme précisément en inline.
+const AIRFLOW_BLADE_MAIN = "M12 12 L3 3 C7 3 12 6 12 12 Z";
+const AIRFLOW_BLADE_FOLD = "M12 12 L3 3 C6 6 9 9 12 12 Z";
+const airflowBlades = [
+    { rotate: 0, main: "#E8402D", fold: "#F4795C" },   // Nord-Ouest — rouge
+    { rotate: 90, main: "#14C2D4", fold: "#6FE3EC" },  // Nord-Est — cyan
+    { rotate: 180, main: "#1FBE58", fold: "#4ADE80" }, // Sud-Est — vert
+    { rotate: 270, main: "#1279E0", fold: "#4CA6F0" }, // Sud-Ouest — bleu
+];
+
+const AirflowSvg = ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        {airflowBlades.map(({ rotate, main, fold }) => (
+            <g key={rotate} transform={`rotate(${rotate} 12 12)`}>
+                <path d={AIRFLOW_BLADE_MAIN} fill={main} />
+                <path d={AIRFLOW_BLADE_FOLD} fill={fold} />
+            </g>
+        ))}
+        <circle cx="12" cy="12" r="1.3" fill="#3f3f3f" />
+    </svg>
+);
+
+// ─── Étagère technos (Hero) : une seule source de vérité pour icône + nom,
+// ce qui permet d'afficher un tooltip avec le nom au survol de chaque icône.
+// DATA & CLOUD en premier, DEV après.
+// Docker est désormais regroupé avec Supabase / Firebase / Git.
+const techShelfItems = [
+    // ── DATA & CLOUD (en premier) ──
+    { label: "PySpark", cls: styles.textPyspark, render: () => <PySparkSvg className={styles.shelfSvgIcon} /> },
+    { label: "Power BI", cls: styles.textPowerbi, render: () => <PowerBISvg className={styles.shelfSvgIcon} /> },
+    { label: "DuckDB", cls: styles.textDuckdb, render: () => <DuckDbSvg className={styles.shelfSvgIcon} /> },
+    { label: "Apache Airflow", cls: styles.textAirflow, render: () => <AirflowSvg className={styles.shelfSvgIcon} /> },
+    { label: "Pandas", cls: styles.textPandas, render: () => <PandasSvg className={styles.shelfSvgIcon} /> },
+    { label: "SQL", cls: styles.textSql, icon: "devicon-postgresql-plain" },
+    { label: "Python", cls: styles.textPython, icon: "devicon-python-plain" },
+    { label: "Supabase", cls: styles.textSupabase, render: () => <SupabaseSvg className={styles.shelfSvgIcon} /> },
+    { label: "Firebase", cls: styles.textFirebase, icon: "devicon-firebase-plain" },
+    { label: "Git", cls: styles.textGit, icon: "devicon-git-plain" },
+    { label: "Docker", cls: styles.textDocker, icon: "devicon-docker-plain" },
+    // ── DÉVELOPPEMENT (en second) ──
+    { label: "Flutter", cls: styles.textFlutter, icon: "devicon-flutter-plain" },
+    { label: "React", cls: styles.textReact, icon: "devicon-react-original" },
+    { label: "Java", cls: styles.textJava, icon: "devicon-java-plain" },
+    { label: "Spring Boot", cls: styles.textSpring, icon: "devicon-spring-plain" },
+];
 
 // ─── Composant Navbar ────────────────────────────────────────────────────────
 
@@ -182,34 +253,12 @@ function Hero() {
                             </svg>
                         </a>
                     </div>
-                    {/* Tech shelf : DATA & CLOUD en premier, DEV après */}
+                    {/* Étagère technos : chaque icône affiche son nom en tooltip au survol */}
                     <div className={styles.miniTechShelf}>
-                        <div className={`${styles.shelfIcon} ${styles.textPyspark}`}>
-                            <PySparkSvg className={styles.shelfSvgIcon} />
-                        </div>
-                        <div className={`${styles.shelfIcon} ${styles.textPowerbi}`}>
-                            <PowerBISvg className={styles.shelfSvgIcon} />
-                        </div>
-                        <div className={`${styles.shelfIcon} ${styles.textSupabase}`}>
-                            <SupabaseSvg className={styles.shelfSvgIcon} />
-                        </div>
-                        {[
-                            { cls: styles.textSql, icon: "devicon-postgresql-plain" },
-                            { cls: styles.textFirebase, icon: "devicon-firebase-plain" },
-                            { cls: styles.textPython, icon: "devicon-python-plain" },
-                            { cls: styles.textGit, icon: "devicon-git-plain" },
-                            { cls: styles.textFlutter, icon: "devicon-flutter-plain" },
-                            { cls: styles.textReact, icon: "devicon-react-original" },
-                            { cls: styles.textJava, icon: "devicon-java-plain" },
-                            { cls: styles.textHtml, icon: "devicon-html5-plain" },
-                            { cls: styles.textCss, icon: "devicon-css3-plain" },
-                            { cls: styles.textSpring, icon: "devicon-spring-plain" },
-                            { cls: styles.textFastapi, icon: "devicon-fastapi-plain" },
-                            { cls: styles.textLaravel, icon: "devicon-laravel-original" },
-                            { cls: styles.textPhp, icon: "devicon-php-plain" },
-                        ].map(({ cls, icon }) => (
-                            <div key={icon} className={`${styles.shelfIcon} ${cls}`}>
-                                <i className={icon}></i>
+                        {techShelfItems.map(({ label, cls, render, icon }) => (
+                            <div key={label} className={`${styles.shelfIcon} ${cls}`}>
+                                <span className={styles.shelfTooltip}>{label}</span>
+                                {render ? render() : <i className={icon}></i>}
                             </div>
                         ))}
                     </div>
@@ -234,7 +283,9 @@ function Skills() {
     const dataSkills = [
         { label: "SQL", iconCls: "devicon-postgresql-plain", colorCls: styles.textSql, level: "70%" },
     ];
+    // Docker rejoint désormais ce groupe (badges simples, sans pourcentage)
     const dataTools = [
+        { label: "Docker", iconCls: "devicon-docker-plain", colorCls: styles.textDocker },
         { label: "Firebase", iconCls: "devicon-firebase-plain", colorCls: styles.textFirebase },
         { label: "Git", iconCls: "devicon-git-plain", colorCls: styles.textGit },
     ];
@@ -242,16 +293,11 @@ function Skills() {
     // ── Bloc DÉVELOPPEMENT ──
     const devSkills = [
         { label: "Flutter", iconCls: "devicon-flutter-plain", colorCls: styles.textFlutter, level: "80%" },
-        { label: "HTML5", iconCls: "devicon-html5-plain", colorCls: styles.textHtml, level: "70%" },
-        { label: "CSS3", iconCls: "devicon-css3-plain", colorCls: styles.textCss, level: "70%" },
         { label: "React", iconCls: "devicon-react-original", colorCls: styles.textReact, level: "60%" },
         { label: "Spring Boot", iconCls: "devicon-spring-plain", colorCls: styles.textSpring, level: "60%" },
-        { label: "FastAPI", iconCls: "devicon-fastapi-plain", colorCls: styles.textFastapi, level: "30%" },
     ];
     const devTools = [
-        { label: "Laravel", iconCls: "devicon-laravel-original", colorCls: styles.textLaravel },
         { label: "JEE", iconCls: "devicon-java-plain", colorCls: styles.textJava },
-        { label: "PHP", iconCls: "devicon-php-plain", colorCls: styles.textPhp },
     ];
 
     return (
@@ -280,6 +326,27 @@ function Skills() {
                                 Power BI
                             </div>
                             <span className={`${styles.techLevel} ${styles.textPowerbi}`}>40%</span>
+                        </div>
+                        <div className={styles.techBadgePro}>
+                            <div className={styles.badgeMain}>
+                                <DuckDbSvg className={styles.techSvgIcon} />
+                                DuckDB
+                            </div>
+                            <span className={`${styles.techLevel} ${styles.textDuckdb}`}>70%</span>
+                        </div>
+                        <div className={styles.techBadgePro}>
+                            <div className={styles.badgeMain}>
+                                <PandasSvg className={styles.techSvgIcon} />
+                                Pandas
+                            </div>
+                            <span className={`${styles.techLevel} ${styles.textPandas}`}>70%</span>
+                        </div>
+                        <div className={styles.techBadgePro}>
+                            <div className={styles.badgeMain}>
+                                <AirflowSvg className={styles.techSvgIcon} />
+                                Airflow
+                            </div>
+                            <span className={`${styles.techLevel} ${styles.textAirflow}`}>40%</span>
                         </div>
                         {dataSkills.map(({ label, iconCls, colorCls, level }) => (
                             <div key={label} className={styles.techBadgePro}>
@@ -376,7 +443,9 @@ function Certifications() {
 
     const filtered = activeFilter === "all"
         ? certifications
-        : certifications.filter((c) => c.category === activeFilter);
+        : activeFilter === "devweb"
+            ? certifications.filter((c) => devWebCategories.includes(c.category))
+            : certifications.filter((c) => c.category === activeFilter);
 
     return (
         <section id="certifications" className={styles.sectionCertifications}>
