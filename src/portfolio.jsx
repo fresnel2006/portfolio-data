@@ -57,7 +57,7 @@ const certifications = [
     { title: "Comprendre la syntaxe SQL de base", org: "Coursera", date: "Apr 2026", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/ISGDE4U9RNQQ" },
     { title: "Analyse de données avec SQL", org: "Coursera", date: "Apr 2026", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/MKKZXZJ9WFNT" },
     { title: "Fondations SQL", org: "Microsoft", date: "Nov 2025", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/O37T7NBNHQG9" },
-    // PySpark (Data)
+    // PySpark & Pandas (Data)
     { title: "Analyse de données avec PySpark", org: "Coursera", date: "Apr 2026", category: "pyspark", badge: "PySpark", url: "https://www.coursera.org/account/accomplishments/records/Q8CG52OJ6KRJ" },
     { title: "Introduction à PySpark", org: "Edureka", date: "Apr 2026", category: "pyspark", badge: "PySpark", url: "https://www.coursera.org/account/accomplishments/records/MQREA033HWI3" },
     { title: "Prédiction de l'admission avec PySpark ML", org: "Coursera", date: "Feb 2026", category: "pyspark", badge: "ML", url: "https://www.coursera.org/account/accomplishments/records/Q4M9M3HVR5YU" },
@@ -87,7 +87,7 @@ const certifications = [
 const filterTabs = [
     { label: "Tout (25)", value: "all" },
     { label: "SQL (5)", value: "sql" },
-    { label: "PySpark (5)", value: "pyspark" },
+    { label: "PySpark & Pandas (5)", value: "pyspark" },
     { label: "Cloud (5)", value: "cloud" },
     { label: "Développement Mobile/Web (10)", value: "devweb" },
 ];
@@ -168,17 +168,26 @@ const AirflowSvg = ({ className }) => (
     </svg>
 );
 
+// Icône combinée PySpark + Pandas, utilisée partout où les deux technos
+// sont présentées comme un seul badge/tag ("PySpark & Pandas").
+const PySparkPandasSvg = ({ className }) => (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+        <PySparkSvg className={className} />
+        <PandasSvg className={className} />
+    </span>
+);
+
 // ─── Étagère technos (Hero) : une seule source de vérité pour icône + nom,
 // ce qui permet d'afficher un tooltip avec le nom au survol de chaque icône.
 // DATA & CLOUD en premier, DEV après.
 // Docker est désormais regroupé avec Supabase / Firebase / Git.
+// PySpark et Pandas sont désormais regroupés en une seule entrée.
 const techShelfItems = [
     // ── DATA & CLOUD (en premier) ──
-    { label: "PySpark", cls: styles.textPyspark, render: () => <PySparkSvg className={styles.shelfSvgIcon} /> },
+    { label: "PySpark & Pandas", cls: styles.textPyspark, render: () => <PySparkPandasSvg className={styles.shelfSvgIcon} /> },
     { label: "Power BI", cls: styles.textPowerbi, render: () => <PowerBISvg className={styles.shelfSvgIcon} /> },
     { label: "DuckDB", cls: styles.textDuckdb, render: () => <DuckDbSvg className={styles.shelfSvgIcon} /> },
     { label: "Apache Airflow", cls: styles.textAirflow, render: () => <AirflowSvg className={styles.shelfSvgIcon} /> },
-    { label: "Pandas", cls: styles.textPandas, render: () => <PandasSvg className={styles.shelfSvgIcon} /> },
     { label: "SQL", cls: styles.textSql, icon: "devicon-postgresql-plain" },
     { label: "Python", cls: styles.textPython, icon: "devicon-python-plain" },
     { label: "Supabase", cls: styles.textSupabase, render: () => <SupabaseSvg className={styles.shelfSvgIcon} /> },
@@ -315,8 +324,8 @@ function Skills() {
                     <div className={styles.badgeGrid}>
                         <div className={styles.techBadgePro}>
                             <div className={styles.badgeMain}>
-                                <PySparkSvg className={styles.techSvgIcon} />
-                                PySpark
+                                <PySparkPandasSvg className={styles.techSvgIcon} />
+                                PySpark & Pandas
                             </div>
                             <span className={`${styles.techLevel} ${styles.textPyspark}`}>70%</span>
                         </div>
@@ -333,13 +342,6 @@ function Skills() {
                                 DuckDB
                             </div>
                             <span className={`${styles.techLevel} ${styles.textDuckdb}`}>70%</span>
-                        </div>
-                        <div className={styles.techBadgePro}>
-                            <div className={styles.badgeMain}>
-                                <PandasSvg className={styles.techSvgIcon} />
-                                Pandas
-                            </div>
-                            <span className={`${styles.techLevel} ${styles.textPandas}`}>70%</span>
                         </div>
                         <div className={styles.techBadgePro}>
                             <div className={styles.badgeMain}>
