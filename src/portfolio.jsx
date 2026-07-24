@@ -57,15 +57,22 @@ const certifications = [
     { title: "Comprendre la syntaxe SQL de base", org: "Coursera", date: "Apr 2026", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/ISGDE4U9RNQQ" },
     { title: "Analyse de données avec SQL", org: "Coursera", date: "Apr 2026", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/MKKZXZJ9WFNT" },
     { title: "Fondations SQL", org: "Microsoft", date: "Nov 2025", category: "sql", badge: "SQL", url: "https://www.coursera.org/account/accomplishments/records/O37T7NBNHQG9" },
+<<<<<<< HEAD
     // PySpark (Data)
+=======
+    // PySpark & Pandas (Data)
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
     { title: "Analyse de données avec PySpark", org: "Coursera", date: "Apr 2026", category: "pyspark", badge: "PySpark", url: "https://www.coursera.org/account/accomplishments/records/Q8CG52OJ6KRJ" },
     { title: "Introduction à PySpark", org: "Edureka", date: "Apr 2026", category: "pyspark", badge: "PySpark", url: "https://www.coursera.org/account/accomplishments/records/MQREA033HWI3" },
     { title: "Prédiction de l'admission avec PySpark ML", org: "Coursera", date: "Feb 2026", category: "pyspark", badge: "ML", url: "https://www.coursera.org/account/accomplishments/records/Q4M9M3HVR5YU" },
     { title: "PySpark & Python : Guide pratique", org: "EDUCBA", date: "Feb 2026", category: "pyspark", badge: "PySpark", url: "https://www.coursera.org/account/accomplishments/records/9KUQA9QYH7FS" },
     { title: "Fondations PySpark", org: "Coursera", date: "Feb 2026", category: "pyspark", badge: "Data", url: "https://www.coursera.org/account/accomplishments/records/1G8YM43NJCAO" },
+<<<<<<< HEAD
     // Pandas / Analyse de données Python (Data)
     { title: "Analyse de données Python : Pandas & NumPy", org: "Coursera", date: "Jul 2026", category: "pyspark", badge: "Data Analysis", url: "https://coursera.org/verify/RUN6PIE8S6TH" },
     { title: "Fondations de l'analyse de données avec Pandas et Python", org: "Packt", date: "Jul 2026", category: "pyspark", badge: "Data Analysis", url: "https://coursera.org/verify/WRL6NOV5PTFF" },
+=======
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
     // Cloud & Data Infra
     { title: "Fondements de la base de données Oracle", org: "LearnQuest", date: "Apr 2026", category: "cloud", badge: "Database", url: "https://www.coursera.org/account/accomplishments/records/SIF9HZJYXQJK" },
     { title: "Microsoft Azure SQL", org: "Microsoft", date: "Apr 2026", category: "cloud", badge: "Cloud", url: "https://www.coursera.org/account/accomplishments/records/7GJA7ZOMXM0I" },
@@ -88,9 +95,15 @@ const certifications = [
 ];
 
 const filterTabs = [
+<<<<<<< HEAD
     { label: "Tout (27)", value: "all" },
     { label: "SQL (5)", value: "sql" },
     { label: "PySpark (7)", value: "pyspark" },
+=======
+    { label: "Tout (25)", value: "all" },
+    { label: "SQL (5)", value: "sql" },
+    { label: "PySpark & Pandas (5)", value: "pyspark" },
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
     { label: "Cloud (5)", value: "cloud" },
     { label: "Développement Mobile/Web (10)", value: "devweb" },
 ];
@@ -171,10 +184,23 @@ const AirflowSvg = ({ className }) => (
     </svg>
 );
 
+<<<<<<< HEAD
+=======
+// Icône combinée PySpark + Pandas, utilisée partout où les deux technos
+// sont présentées comme un seul badge/tag ("PySpark & Pandas").
+const PySparkPandasSvg = ({ className }) => (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+        <PySparkSvg className={className} />
+        <PandasSvg className={className} />
+    </span>
+);
+
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
 // ─── Étagère technos (Hero) : une seule source de vérité pour icône + nom,
 // ce qui permet d'afficher un tooltip avec le nom au survol de chaque icône.
 // DATA & CLOUD en premier, DEV après.
 // Docker est désormais regroupé avec Supabase / Firebase / Git.
+<<<<<<< HEAD
 const techShelfItems = [
     // ── DATA & CLOUD (en premier) ──
     { label: "PySpark", cls: styles.textPyspark, render: () => <PySparkSvg className={styles.shelfSvgIcon} /> },
@@ -182,6 +208,15 @@ const techShelfItems = [
     { label: "DuckDB", cls: styles.textDuckdb, render: () => <DuckDbSvg className={styles.shelfSvgIcon} /> },
     { label: "Apache Airflow", cls: styles.textAirflow, render: () => <AirflowSvg className={styles.shelfSvgIcon} /> },
     { label: "Pandas", cls: styles.textPandas, render: () => <PandasSvg className={styles.shelfSvgIcon} /> },
+=======
+// PySpark et Pandas sont désormais regroupés en une seule entrée.
+const techShelfItems = [
+    // ── DATA & CLOUD (en premier) ──
+    { label: "PySpark & Pandas", cls: styles.textPyspark, render: () => <PySparkPandasSvg className={styles.shelfSvgIcon} /> },
+    { label: "Power BI", cls: styles.textPowerbi, render: () => <PowerBISvg className={styles.shelfSvgIcon} /> },
+    { label: "DuckDB", cls: styles.textDuckdb, render: () => <DuckDbSvg className={styles.shelfSvgIcon} /> },
+    { label: "Apache Airflow", cls: styles.textAirflow, render: () => <AirflowSvg className={styles.shelfSvgIcon} /> },
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
     { label: "SQL", cls: styles.textSql, icon: "devicon-postgresql-plain" },
     { label: "Python", cls: styles.textPython, icon: "devicon-python-plain" },
     { label: "Supabase", cls: styles.textSupabase, render: () => <SupabaseSvg className={styles.shelfSvgIcon} /> },
@@ -318,8 +353,13 @@ function Skills() {
                     <div className={styles.badgeGrid}>
                         <div className={styles.techBadgePro}>
                             <div className={styles.badgeMain}>
+<<<<<<< HEAD
                                 <PySparkSvg className={styles.techSvgIcon} />
                                 PySpark
+=======
+                                <PySparkPandasSvg className={styles.techSvgIcon} />
+                                PySpark & Pandas
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
                             </div>
                             <span className={`${styles.techLevel} ${styles.textPyspark}`}>70%</span>
                         </div>
@@ -339,6 +379,7 @@ function Skills() {
                         </div>
                         <div className={styles.techBadgePro}>
                             <div className={styles.badgeMain}>
+<<<<<<< HEAD
                                 <PandasSvg className={styles.techSvgIcon} />
                                 Pandas
                             </div>
@@ -346,6 +387,8 @@ function Skills() {
                         </div>
                         <div className={styles.techBadgePro}>
                             <div className={styles.badgeMain}>
+=======
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
                                 <AirflowSvg className={styles.techSvgIcon} />
                                 Airflow
                             </div>
@@ -455,7 +498,11 @@ function Certifications() {
             <div className={styles.sectionHeader}>
                 <span className={styles.sectionTag}>Validations</span>
                 <h2 className={styles.sectionTitle}>Certifications Professionnelles</h2>
+<<<<<<< HEAD
                 <p className={styles.sectionSubtitle}>27 certifications obtenues en Data Engineering, Web, Mobile & Cloud</p>
+=======
+                <p className={styles.sectionSubtitle}>25 certifications obtenues en Data Engineering, Web, Mobile & Cloud</p>
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
             </div>
 
             <div className={styles.certFilters}>
@@ -540,7 +587,11 @@ function Experience() {
                     </div>
                     <div className={styles.certsSummary}>
                         <div className={styles.certSummaryCard}>
+<<<<<<< HEAD
                             <div className={styles.certCount}>12</div>
+=======
+                            <div className={styles.certCount}>10</div>
+>>>>>>> 2868704d945dbb8db7d27a95b8e2368de316fb7c
                             <div className={styles.certLabel}>Ingénierie des données</div>
                         </div>
                         <div className={styles.certSummaryCard}>
